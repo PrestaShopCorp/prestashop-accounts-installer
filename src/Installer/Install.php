@@ -80,7 +80,7 @@ class Install {
                 'user' => [
                     'email' => null,
                     'emailIsValidated' => false,
-                    'isSuperAdmin' => false,
+                    'isSuperAdmin' => \Context::getContext()->employee->isSuperAdmin(),
                 ],
                 'currentShop' => null,
                 'shops' => [],
@@ -167,7 +167,7 @@ class Install {
     /**
      * @return bool
      */
-    private function isShopVersion17()
+    private function isShopVersion17(): bool
     {
         return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
     }
