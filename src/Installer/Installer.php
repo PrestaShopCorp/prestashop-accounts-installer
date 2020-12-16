@@ -2,10 +2,13 @@
 
 namespace PrestaShop\PrestaShopAccountsInstaller\Installer;
 
+use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
+use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
+
 /**
  * Install ps_accounts module
  */
-class Install {
+class Installer {
     /**
      * @var string
      */
@@ -30,19 +33,13 @@ class Install {
             return true;
         }
 
-        // if on PrestaShop 1.6, do nothing
         if (false === $this->isShopVersion17()) {
             return true;
         }
 
-        $moduleManagerBuilder = \PrestaShop\Module\Ps_metrics\Module\ModuleManagerBuilder::getInstance();
+        $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
         $moduleManager = $moduleManagerBuilder->build();
         $moduleIsInstalled = $moduleManager->install($this->psAccounts);
-
-        //if (false === $moduleIsInstalled) {
-        //    $errorHandler = ErrorHandler::getInstance();
-        //    $errorHandler->handle(new \Exception('Module ps_accounts can\'t be installed', 500), 500);
-        //}
 
         return $moduleIsInstalled;
     }
@@ -61,40 +58,6 @@ class Install {
     public function isPsAccountsEnabled(): bool
     {
         return \Module::isEnabled($this->psAccounts);
-    }
-
-    /**
-     * @param string $psxName
-     * @return array
-     */
-    public function PresentLight(string $psxName): array
-    {
-        //try {
-            return [
-                'psIs17' => $this->isShopVersion17(),
-                'psAccountsInstallLink' => $this->getPsAccountsInstallLink($psxName),
-                'psAccountsEnableLink' => null,
-                'psAccountsIsInstalled' => $this->isPsAccountsInstalled(),
-                'psAccountsIsEnabled' => $this->isPsAccountsEnabled(),
-                'onboardingLink' => null,
-                'user' => [
-                    'email' => null,
-                    'emailIsValidated' => false,
-                    'isSuperAdmin' => \Context::getContext()->employee->isSuperAdmin(),
-                ],
-                'currentShop' => null,
-                'shops' => [],
-                'superAdminEmail' => null,
-                'ssoResendVerificationEmail' => null,
-                'manageAccountLink' => null,
-            ];
-        //} catch (\Exception $e) {
-        //    $this->getService(ErrorHandler::class)
-        //        ->handle($e, $e->getCode());
-        //}
-
-        //return [];
-
     }
 
     /**
@@ -158,7 +121,7 @@ class Install {
     public function get(string $serviceName)
     {
         if (null === $this->container) {
-            $this->container = \PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
+            $this->container = SymfonyContainer::getInstance();
         }
 
         return $this->container->get($serviceName);
@@ -167,7 +130,7 @@ class Install {
     /**
      * @return bool
      */
-    private function isShopVersion17(): bool
+    public function isShopVersion17(): bool
     {
         return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
     }
