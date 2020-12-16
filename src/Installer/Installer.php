@@ -5,19 +5,16 @@ namespace PrestaShop\PrestaShopAccountsInstaller\Installer;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
-/**
- * Install ps_accounts module
- */
 class Installer {
     /**
      * @var string
      */
-    private $psAccounts = 'ps_accounts';
+    private string $psAccounts = 'ps_accounts';
 
     /**
      * @var SymfonyContainer
      */
-    private $container;
+    private SymfonyContainer $container;
 
     /**
      * Install ps_accounts module if not installed

@@ -4,10 +4,6 @@ namespace PrestaShop\PrestaShopAccountsInstaller\Presenter;
 
 use PrestaShop\PrestaShopAccountsInstaller\Installer\Installer;
 
-
-/**
- * Install ps_accounts module
- */
 class LightPresenter {
     /**
      * @param string $psxName
