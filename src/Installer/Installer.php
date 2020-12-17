@@ -9,12 +9,12 @@ class Installer {
     /**
      * @var string
      */
-    private string $psAccounts = 'ps_accounts';
+    private $psAccounts = 'ps_accounts';
 
     /**
      * @var SymfonyContainer
      */
-    private SymfonyContainer $container;
+    private $container;
 
     /**
      * Install ps_accounts module if not installed
@@ -24,7 +24,7 @@ class Installer {
      *
      * @throws \Exception
      */
-    public function installPsAccounts(): bool
+    public function installPsAccounts()
     {
         if (true === $this->isPsAccountsInstalled()) {
             return true;
@@ -36,15 +36,14 @@ class Installer {
 
         $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
         $moduleManager = $moduleManagerBuilder->build();
-        $moduleIsInstalled = $moduleManager->install($this->psAccounts);
 
-        return $moduleIsInstalled;
+        return $moduleManager->install($this->psAccounts);
     }
 
     /**
      * @return bool
      */
-    public function isPsAccountsInstalled(): bool
+    public function isPsAccountsInstalled()
     {
         return \Module::isInstalled($this->psAccounts);
     }
@@ -52,7 +51,7 @@ class Installer {
     /**
      * @return bool
      */
-    public function isPsAccountsEnabled(): bool
+    public function isPsAccountsEnabled()
     {
         return \Module::isEnabled($this->psAccounts);
     }
@@ -62,7 +61,7 @@ class Installer {
      * @return string | null
      *
      */
-    public function getPsAccountsInstallLink(string $psxName): ?string
+    public function getPsAccountsInstallLink($psxName)
     {
         if (true === $this->isPsAccountsInstalled()) {
             return null;
@@ -95,7 +94,7 @@ class Installer {
      * @return string
      * @throws \PrestaShopException
      */
-    public function getAdminLink(string $controller, $withToken = true, $sfRouteParams = [], $params = []): string
+    public function getAdminLink($controller, $withToken = true, $sfRouteParams = [], $params = [])
     {
         if ($this->isShopVersion17()) {
             return $this->getAdminLink($controller, $withToken, $sfRouteParams, $params);
@@ -115,7 +114,7 @@ class Installer {
      *
      * @return mixed
      */
-    public function get(string $serviceName)
+    public function get($serviceName)
     {
         if (null === $this->container) {
             $this->container = SymfonyContainer::getInstance();
@@ -127,7 +126,7 @@ class Installer {
     /**
      * @return bool
      */
-    public function isShopVersion17(): bool
+    public function isShopVersion17()
     {
         return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
     }

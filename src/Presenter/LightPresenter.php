@@ -9,7 +9,7 @@ class LightPresenter {
      * @param string $psxName
      * @return array
      */
-    public function Present(string $psxName): array
+    public function Present($psxName)
     {
         $installer = new Installer;
         return [
