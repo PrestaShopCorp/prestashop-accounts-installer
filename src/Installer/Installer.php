@@ -58,8 +58,10 @@ class Installer {
 
     /**
      * @param string $psxName
+     *
      * @return string | null
      *
+     * @throws \PrestaShopException
      */
     public function getPsAccountsInstallLink($psxName)
     {
@@ -92,6 +94,7 @@ class Installer {
      * @param array $params
      *
      * @return string
+     *
      * @throws \PrestaShopException
      */
     public function getAdminLink($controller, $withToken = true, $sfRouteParams = [], $params = [])
