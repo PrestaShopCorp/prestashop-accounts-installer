@@ -12,9 +12,22 @@ class Installer {
     private $psAccounts = 'ps_accounts';
 
     /**
+     * @var \Link
+     */
+    private $link;
+
+    /**
      * @var SymfonyContainer
      */
     private $container;
+
+    public function __construct(\Link $link = null)
+    {
+        if (null === $link) {
+            $link = new \Link();
+        }
+        $this->link = $link;
+    }
 
     /**
      * Install ps_accounts module if not installed
@@ -73,9 +86,9 @@ class Installer {
             $router = $this->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
-                'action' => 'install',
-                'module_name' => 'ps_accounts',
-            ]);
+                    'action' => 'install',
+                    'module_name' => 'ps_accounts',
+                ]);
         }
 
         return  $this->getAdminLink('AdminModules', true, [], [
@@ -100,14 +113,14 @@ class Installer {
     public function getAdminLink($controller, $withToken = true, $sfRouteParams = [], $params = [])
     {
         if ($this->isShopVersion17()) {
-            return $this->getAdminLink($controller, $withToken, $sfRouteParams, $params);
+            return $this->link->getAdminLink($controller, $withToken, $sfRouteParams, $params);
         }
         $paramsAsString = '';
         foreach ($params as $key => $value) {
             $paramsAsString .= "&$key=$value";
         }
 
-        return \Tools::getShopDomainSsl(true) . __PS_BASE_URI__ . basename(_PS_ADMIN_DIR_) . '/' . $this->getAdminLink($controller, $withToken) . $paramsAsString;
+        return \Tools::getShopDomainSsl(true) . __PS_BASE_URI__ . basename(_PS_ADMIN_DIR_) . '/' . $this->link->getAdminLink($controller, $withToken) . $paramsAsString;
     }
 
     /**
