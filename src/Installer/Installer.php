@@ -1,6 +1,6 @@
 <?php
 
-namespace PrestaShop\PrestaShopAccountsInstaller\Installer;
+namespace PrestaShop\PsAccountsInstaller\Installer;
 
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;

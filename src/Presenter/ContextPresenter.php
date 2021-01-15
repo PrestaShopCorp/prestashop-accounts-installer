@@ -1,17 +1,33 @@
 <?php
 
-namespace PrestaShop\PrestaShopAccountsInstaller\Presenter;
+namespace PrestaShop\PsAccountsInstaller\Presenter;
 
-use PrestaShop\PrestaShopAccountsInstaller\Installer\Installer;
+use Module;
+use PrestaShop\Module\PsAccounts\Presenter\PsAccountsPresenter;
+use PrestaShop\PsAccountsInstaller\Installer\Installer;
 
-class LightPresenter {
+class ContextPresenter {
     /**
      * @param string $psxName
+     *
      * @return array
+     *
+     * @throws \PrestaShopException
+     * @throws \Throwable
      */
-    public function Present($psxName)
+    public function present($psxName)
     {
         $installer = new Installer;
+
+        if ($installer->isPsAccountsInstalled()) {
+            /** @var PsAccountsPresenter $presenter */
+            $presenter = Module::getInstanceByName('ps_accounts')
+                ->getService(PsAccountsPresenter::class);
+
+            return $presenter->present($psxName);
+        }
+
+        // Fallback minimal Presenter
         return [
             'psIs17' => $installer->isShopVersion17(),
             'psAccountsInstallLink' => $installer->getPsAccountsInstallLink($psxName),
