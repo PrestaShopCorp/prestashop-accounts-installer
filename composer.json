@@ -1,7 +1,7 @@
 {
   "name": "prestashop/prestashop-accounts-installer",
   "type": "library",
-  "description": "The purpose of this library is to check if the module ps_accounts is installed, if not, install it",
+  "description": "Ensures the mandatory ps_accounts module is properly installed and up to date",
   "require": {
   },
   "autoload": {
