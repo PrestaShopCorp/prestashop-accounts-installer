@@ -1,6 +1,8 @@
 # prestashop-accounts-installer
 
-Checks if the mandatory ps_accounts module is properly installed and up to date
+Checks if the mandatory ps_accounts module is properly installed and up to date. If the module is not installed, it will
+present the installation link.
+
 
 ## Installation
 
