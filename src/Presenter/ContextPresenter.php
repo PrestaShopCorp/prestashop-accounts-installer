@@ -6,7 +6,8 @@ use Module;
 use PrestaShop\Module\PsAccounts\Presenter\PsAccountsPresenter;
 use PrestaShop\PsAccountsInstaller\Installer\Installer;
 
-class ContextPresenter {
+class ContextPresenter
+{
     /**
      * @param string $psxName
      *
@@ -17,7 +18,7 @@ class ContextPresenter {
      */
     public function present($psxName)
     {
-        $installer = new Installer;
+        $installer = new Installer();
 
         if ($installer->isPsAccountsInstalled()) {
             /** @var PsAccountsPresenter $presenter */

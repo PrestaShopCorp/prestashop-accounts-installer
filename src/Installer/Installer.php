@@ -5,7 +5,8 @@ namespace PrestaShop\PsAccountsInstaller\Installer;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 
-class Installer {
+class Installer
+{
     /**
      * @var string
      */
@@ -91,7 +92,7 @@ class Installer {
                 ]);
         }
 
-        return  $this->getAdminLink('AdminModules', true, [], [
+        return $this->getAdminLink('AdminModules', true, [], [
             'module_name' => $psxName,
             'configure' => $psxName,
             'install' => 'ps_accounts',
