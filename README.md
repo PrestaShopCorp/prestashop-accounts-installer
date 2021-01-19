@@ -1,8 +1,6 @@
 # prestashop-accounts-installer
 
-Checks if the mandatory ps_accounts module is properly installed and up to date. If the module is not installed, it will
-present the installation link.
-
+Utility package to install `ps_accounts` module or present data to trigger manual install from psx configuration page.
 
 ## Installation
 
@@ -32,3 +30,5 @@ For example in your main module's class `getContent` method.
             ->Present($this->name),
     ]);
 ```
+
+This presenter will serve as default presenter and switch to PsAccountsPresenter data when `ps_accounts` module is installed.
