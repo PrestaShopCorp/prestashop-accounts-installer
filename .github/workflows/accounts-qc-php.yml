@@ -1,9 +1,6 @@
-name: Accounts Quality Control PHP
+name: PsAccountsInstaller Quality Control PHP
 
-on:
-  pull_request:
-    paths:
-      - 'src/**'
+on: [push]
 
 jobs:
   php-linter:
