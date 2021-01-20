@@ -17,11 +17,6 @@ class Installer
      */
     private $link;
 
-    /**
-     * @var SymfonyContainer
-     */
-    private $container;
-
     public function __construct(\Link $link = null)
     {
         if (null === $link) {
@@ -84,7 +79,7 @@ class Installer
         }
 
         if ($this->isShopVersion17()) {
-            $router = $this->get('router');
+            $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
                     'action' => 'install',
@@ -122,22 +117,6 @@ class Installer
         }
 
         return \Tools::getShopDomainSsl(true) . __PS_BASE_URI__ . basename(_PS_ADMIN_DIR_) . '/' . $this->link->getAdminLink($controller, $withToken) . $paramsAsString;
-    }
-
-    /**
-     * Override of native function to always retrieve Symfony container instead of legacy admin container on legacy context.
-     *
-     * @param string $serviceName
-     *
-     * @return mixed
-     */
-    public function get($serviceName)
-    {
-        if (null === $this->container) {
-            $this->container = SymfonyContainer::getInstance();
-        }
-
-        return $this->container->get($serviceName);
     }
 
     /**
