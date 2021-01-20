@@ -17,5 +17,6 @@ parameters:
 		- '#Cannot call method getService\(\) on Module\|false.#'
 		- '#Class PrestaShop\\Module\\PsAccounts\\Presenter\\PsAccountsPresenter not found.#'
 		- '#Call to method get\(\) on an unknown class PrestaShop\\PrestaShop\\Adapter\\SymfonyContainer.#'
+		- '#Call to an undefined method object::generate\(\).#'
 
 	level: 7
