@@ -21,7 +21,6 @@ class ContextPresenter
         $installer = new Installer();
 
         if ($installer->isPsAccountsInstalled()) {
-            /** @var PsAccountsPresenter $presenter */
             $presenter = Module::getInstanceByName('ps_accounts')
                 ->getService(PsAccountsPresenter::class);
 
