@@ -4,6 +4,7 @@ namespace PrestaShop\PsAccountsInstaller\Installer;
 
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
+use PrestaShop\PsAccountsInstaller\Exception\ModuleNotFoundException;
 
 class Installer
 {
@@ -129,27 +130,31 @@ class Installer
 
     /**
      * @return mixed
+     *
+     * @throws ModuleNotFoundException
      */
     public function getPsAccountsService()
     {
-        if ((new Installer())->isPsAccountsInstalled()) {
+        if ($this->isPsAccountsInstalled()) {
             return \Module::getInstanceByName('ps_accounts')
                 ->getService('PrestaShop\Module\PsAccounts\Service\PsAccountsService');
         }
 
-        return null;
+        throw new ModuleNotFoundException('Can\'t find module ps_accounts');
     }
 
     /**
      * @return mixed
+     *
+     * @throws ModuleNotFoundException
      */
     public function getPsBillingService()
     {
-        if ((new Installer())->isPsAccountsInstalled()) {
+        if ($this->isPsAccountsInstalled()) {
             return \Module::getInstanceByName('ps_accounts')
                 ->getService('PrestaShop\Module\PsAccounts\Service\PsBillingService');
         }
 
-        return null;
+        throw new ModuleNotFoundException('Can\'t find module ps_accounts');
     }
 }
