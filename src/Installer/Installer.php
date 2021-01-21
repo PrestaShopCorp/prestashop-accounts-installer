@@ -126,4 +126,28 @@ class Installer
     {
         return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPsAccountsService()
+    {
+        if ((new Installer())->isPsAccountsInstalled()) {
+            return \Module::getInstanceByName('ps_accounts')
+                ->getService(\PrestaShop\Module\PsAccounts\Service\PsAccountsService::class);
+        }
+        return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPsBillingService()
+    {
+        if ((new Installer())->isPsAccountsInstalled()) {
+            return \Module::getInstanceByName('ps_accounts')
+                ->getService(\PrestaShop\Module\PsAccounts\Service\PsBillingService::class);
+        }
+        return null;
+    }
 }
