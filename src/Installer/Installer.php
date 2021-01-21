@@ -134,8 +134,9 @@ class Installer
     {
         if ((new Installer())->isPsAccountsInstalled()) {
             return \Module::getInstanceByName('ps_accounts')
-                ->getService(\PrestaShop\Module\PsAccounts\Service\PsAccountsService::class);
+                ->getService('PrestaShop\Module\PsAccounts\Service\PsAccountsService');
         }
+
         return null;
     }
 
@@ -146,8 +147,9 @@ class Installer
     {
         if ((new Installer())->isPsAccountsInstalled()) {
             return \Module::getInstanceByName('ps_accounts')
-                ->getService(\PrestaShop\Module\PsAccounts\Service\PsBillingService::class);
+                ->getService('PrestaShop\Module\PsAccounts\Service\PsBillingService');
         }
+
         return null;
     }
 }

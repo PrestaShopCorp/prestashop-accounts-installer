@@ -3,7 +3,6 @@
 namespace PrestaShop\PsAccountsInstaller\Presenter;
 
 use Module;
-use PrestaShop\Module\PsAccounts\Presenter\PsAccountsPresenter;
 use PrestaShop\PsAccountsInstaller\Installer\Installer;
 
 class ContextPresenter
@@ -21,8 +20,9 @@ class ContextPresenter
         $installer = new Installer();
 
         if ($installer->isPsAccountsInstalled()) {
+            /** @var mixed $presenter */
             $presenter = Module::getInstanceByName('ps_accounts')
-                ->getService(PsAccountsPresenter::class);
+                ->getService('PrestaShop\Module\PsAccounts\Presenter\PsAccountsPresenter');
 
             return $presenter->present($psxName);
         }
