@@ -4,14 +4,11 @@ namespace PrestaShop\PsAccountsInstaller\Installer;
 
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
-use PrestaShop\PsAccountsInstaller\Exception\ModuleNotFoundException;
+use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleNotFoundException;
 
 class Installer
 {
-    /**
-     * @var string
-     */
-    private $psAccounts = 'ps_accounts';
+    const PS_ACCOUNTS = 'ps_accounts';
 
     /**
      * @var \Link
@@ -47,7 +44,7 @@ class Installer
         $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
         $moduleManager = $moduleManagerBuilder->build();
 
-        return $moduleManager->install($this->psAccounts);
+        return $moduleManager->install(self::PS_ACCOUNTS);
     }
 
     /**
@@ -55,7 +52,7 @@ class Installer
      */
     public function isPsAccountsInstalled()
     {
-        return \Module::isInstalled($this->psAccounts);
+        return \Module::isInstalled(self::PS_ACCOUNTS);
     }
 
     /**
@@ -63,7 +60,7 @@ class Installer
      */
     public function isPsAccountsEnabled()
     {
-        return \Module::isEnabled($this->psAccounts);
+        return \Module::isEnabled(self::PS_ACCOUNTS);
     }
 
     /**
@@ -136,7 +133,7 @@ class Installer
     public function getPsAccountsService()
     {
         if ($this->isPsAccountsInstalled()) {
-            return \Module::getInstanceByName('ps_accounts')
+            return \Module::getInstanceByName(self::PS_ACCOUNTS)
                 ->getService('PrestaShop\Module\PsAccounts\Service\PsAccountsService');
         }
 
@@ -151,7 +148,7 @@ class Installer
     public function getPsBillingService()
     {
         if ($this->isPsAccountsInstalled()) {
-            return \Module::getInstanceByName('ps_accounts')
+            return \Module::getInstanceByName(self::PS_ACCOUNTS)
                 ->getService('PrestaShop\Module\PsAccounts\Service\PsBillingService');
         }
 
