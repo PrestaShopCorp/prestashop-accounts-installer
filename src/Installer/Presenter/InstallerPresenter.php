@@ -1,39 +1,42 @@
 <?php
 
-namespace PrestaShop\PsAccountsInstaller\Presenter;
+namespace PrestaShop\PsAccountsInstaller\Installer\Presenter;
 
-use Module;
 use PrestaShop\PsAccountsInstaller\Installer\Installer;
 
-class ContextPresenter
+class InstallerPresenter
 {
+    /**
+     * @var Installer
+     */
+    private $installer;
+
+    /**
+     * InstallerPresenter constructor.
+     *
+     * @param Installer $installer
+     */
+    public function __construct(Installer $installer)
+    {
+        $this->installer = $installer;
+    }
+
     /**
      * @param string $psxName
      *
      * @return array
      *
-     * @throws \PrestaShopException
      * @throws \Throwable
      */
     public function present($psxName)
     {
-        $installer = new Installer();
-
-        if ($installer->isPsAccountsInstalled()) {
-            /** @var mixed $presenter */
-            $presenter = Module::getInstanceByName('ps_accounts')
-                ->getService('PrestaShop\Module\PsAccounts\Presenter\PsAccountsPresenter');
-
-            return $presenter->present($psxName);
-        }
-
         // Fallback minimal Presenter
         return [
-            'psIs17' => $installer->isShopVersion17(),
-            'psAccountsInstallLink' => $installer->getPsAccountsInstallLink($psxName),
+            'psIs17' => $this->installer->isShopVersion17(),
+            'psAccountsInstallLink' => $this->installer->getPsAccountsInstallLink($psxName),
             'psAccountsEnableLink' => null,
-            'psAccountsIsInstalled' => $installer->isPsAccountsInstalled(),
-            'psAccountsIsEnabled' => $installer->isPsAccountsEnabled(),
+            'psAccountsIsInstalled' => $this->installer->isPsAccountsInstalled(),
+            'psAccountsIsEnabled' => $this->installer->isPsAccountsEnabled(),
             'onboardingLink' => null,
             'user' => [
                 'email' => null,
