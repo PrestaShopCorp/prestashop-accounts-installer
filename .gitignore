@@ -2,8 +2,6 @@
 .idea
 
 ### composer ###
-/vendor/
-.env
+vendor
 composer-dev.json
 composer-dev.lock
-vendor
