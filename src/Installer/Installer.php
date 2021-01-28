@@ -138,7 +138,7 @@ class Installer
     }
 
     /**
-     * @param $serviceName
+     * @param string $serviceName
      *
      * @return mixed
      *
