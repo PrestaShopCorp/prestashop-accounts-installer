@@ -2,6 +2,8 @@
 
 Utility package to install `ps_accounts` module or present data to trigger manual install from psx configuration page.
 
+This module also give you access to `ps_accounts` services through its module service container dealing with the installation status of the module.
+
 ## Installation
 
 This package is available on [Packagist](https://packagist.org/packages/prestashop/prestashop-accounts-installer), 
@@ -18,15 +20,13 @@ Example :
 services:
   ps_accounts.installer:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Installer'
-  ps_accounts.presenter:
-    class: 'PrestaShop\PsAccountsInstaller\Presenter\ContextPresenter'
 ```
 
 ## How to use it 
 
 ### Installer
 
-In your module main class `install` method. (Only works on prestashop 1.7 and above)
+In your module main class `install` method. (Will only do something on PrestaShop 1.7 and above)
 
 ```php
     (new \PrestaShop\PsAccountsInstaller\Installer\Installer())->installPsAccounts();
@@ -44,7 +44,8 @@ For example in your main module's class `getContent` method.
 
 ```php
     Media::addJsDef([
-        'contextPsAccounts' => (new \PrestaShop\PsAccountsInstaller\Presenter\ContextPresenter())
+        'contextPsAccounts' => ((new \PrestaShop\PsAccountsInstaller\Installer\Installer())
+            ->getPsAccountsPresenter())
             ->Present($this->name),
     ]);
 ```
@@ -52,12 +53,13 @@ OR
 
 ```php
     Media::addJsDef([
-        'contextPsAccounts' => $this->getService('ps_accounts.presenter')
+        'contextPsAccounts' => $this->getService('ps_accounts.installer')
+            ->getPsAccountsPresenter()
             ->present($this->name),
     ]);
 ```
 
-This presenter will serve as default presenter and switch to PsAccountsPresenter data when `ps_accounts` module is installed.
+This presenter will serve as default minimal presenter and switch to PsAccountsPresenter data when `ps_accounts` module is installed.
 
 ### Accessing PsAccounts Services
 
@@ -71,17 +73,20 @@ The methods above will throw an exception in case `ps_accounts` module is not in
 Example :
 
 ```php
+use PrestaShop\PsAccountsInstaller\Installer\Installer;
+use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleNotInstalledException;
+
 try {
 
     $psAccountsService = (new Installer())->getPsAccountsService();
     
     // OR
 
-    $this->getService('ps_accounts.installer')->getPsAccountsService();
+    $psAccountsService = $this->getService('ps_accounts.installer')->getPsAccountsService();
 
     // Your code here
 
-} catch (ModuleNotFoundException $e) {
+} catch (ModuleNotInstalledException $e) {
 
     // You handle exception here
 }
