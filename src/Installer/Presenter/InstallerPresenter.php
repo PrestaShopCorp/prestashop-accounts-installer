@@ -12,13 +12,24 @@ class InstallerPresenter
     private $installer;
 
     /**
+     * @var \Context
+     */
+    private $context;
+
+    /**
      * InstallerPresenter constructor.
      *
      * @param Installer $installer
+     * @param \Context|null $context
      */
-    public function __construct(Installer $installer)
+    public function __construct(Installer $installer, \Context $context = null)
     {
         $this->installer = $installer;
+
+        if (null === $context) {
+            $context = \Context::getContext();
+        }
+        $this->context = $context;
     }
 
     /**
@@ -26,9 +37,9 @@ class InstallerPresenter
      *
      * @return array
      *
-     * @throws \Throwable
+     * @throws \Exception
      */
-    public function present($psxName)
+    public function present($psxName = Installer::PS_ACCOUNTS_MODULE_NAME)
     {
         // Fallback minimal Presenter
         return [
@@ -41,7 +52,7 @@ class InstallerPresenter
             'user' => [
                 'email' => null,
                 'emailIsValidated' => false,
-                'isSuperAdmin' => \Context::getContext()->employee->isSuperAdmin(),
+                'isSuperAdmin' => $this->isEmployeeSuperAdmin(),
             ],
             'currentShop' => null,
             'shops' => [],
@@ -49,5 +60,13 @@ class InstallerPresenter
             'ssoResendVerificationEmail' => null,
             'manageAccountLink' => null,
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmployeeSuperAdmin()
+    {
+        return $this->context->employee->isSuperAdmin();
     }
 }

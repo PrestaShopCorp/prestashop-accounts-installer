@@ -11,11 +11,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     public $faker;
 
-    public function __construct($name = null, array $data = [], $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-    }
-
     /**
      * @return void
      */
@@ -24,13 +19,5 @@ class TestCase extends \PHPUnit\Framework\TestCase
         parent::setUp();
 
         $this->faker = \Faker\Factory::create();
-    }
-
-    /**
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
     }
 }

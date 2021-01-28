@@ -21,6 +21,11 @@ class Installer
      */
     private $link;
 
+    /**
+     * Installer constructor.
+     *
+     * @param \Link|null $link
+     */
     public function __construct(\Link $link = null)
     {
         if (null === $link) {
