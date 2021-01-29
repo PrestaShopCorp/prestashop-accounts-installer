@@ -192,6 +192,7 @@ class Installer
                 '>='
             );
         }
+
         return false;
     }
 
