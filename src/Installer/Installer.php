@@ -183,11 +183,16 @@ class Installer
      */
     public function checkPsAccountsVersion()
     {
-        return version_compare(
-            \Module::getInstanceByName(self::PS_ACCOUNTS_MODULE_NAME)->version,
-            $this->psAccountsVersion,
-            '>='
-        );
+        $module = \Module::getInstanceByName(self::PS_ACCOUNTS_MODULE_NAME);
+
+        if ($module instanceof \Ps_accounts) {
+            return version_compare(
+                $module->version,
+                $this->psAccountsVersion,
+                '>='
+            );
+        }
+        return false;
     }
 
     /**
