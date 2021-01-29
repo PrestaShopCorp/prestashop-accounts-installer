@@ -2,6 +2,6 @@
 
 namespace PrestaShop\PsAccountsInstaller\Installer\Exception;
 
-class ModuleNotInstalledException extends InstallerException
+class ModuleVersionException extends InstallerException
 {
 }

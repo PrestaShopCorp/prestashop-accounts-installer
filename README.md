@@ -20,6 +20,8 @@ Example :
 services:
   ps_accounts.installer:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Installer'
+    arguments:
+      - '4.0.0'
 ```
 
 ## How to use it 
@@ -29,7 +31,9 @@ services:
 In your module main class `install` method. (Will only do something on PrestaShop 1.7 and above)
 
 ```php
-    (new \PrestaShop\PsAccountsInstaller\Installer\Installer())->installPsAccounts();
+    define('PS_ACCOUNTS_VERSION', '4.0.0'); 
+
+    (new \PrestaShop\PsAccountsInstaller\Installer\Installer(PS_ACCOUNTS_VERSION))->installPsAccounts();
 ```
 
 OR
@@ -44,7 +48,7 @@ For example in your main module's class `getContent` method.
 
 ```php
     Media::addJsDef([
-        'contextPsAccounts' => ((new \PrestaShop\PsAccountsInstaller\Installer\Installer())
+        'contextPsAccounts' => ((new \PrestaShop\PsAccountsInstaller\Installer\Installer(PS_ACCOUNTS_VERSION))
             ->getPsAccountsPresenter())
             ->Present($this->name),
     ]);
@@ -73,12 +77,13 @@ The methods above will throw an exception in case `ps_accounts` module is not in
 Example :
 
 ```php
-use PrestaShop\PsAccountsInstaller\Installer\Installer;
+use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleVersionException;
 use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleNotInstalledException;
+use PrestaShop\PsAccountsInstaller\Installer\Installer;
 
 try {
 
-    $psAccountsService = (new Installer())->getPsAccountsService();
+    $psAccountsService = (new Installer(PS_ACCOUNTS_VERSION))->getPsAccountsService();
     
     // OR
 
@@ -87,6 +92,10 @@ try {
     // Your code here
 
 } catch (ModuleNotInstalledException $e) {
+
+    // You handle exception here
+
+} catch (ModuleVersionException $e) {
 
     // You handle exception here
 }

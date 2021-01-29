@@ -44,10 +44,16 @@ class InstallerPresenter
         // Fallback minimal Presenter
         return [
             'psIs17' => $this->installer->isShopVersion17(),
-            'psAccountsInstallLink' => $this->installer->getPsAccountsInstallLink($psxName),
+
             'psAccountsEnableLink' => null,
-            'psAccountsIsInstalled' => $this->installer->isPsAccountsInstalled(),
+            'psAccountsInstallLink' => $this->installer->getPsAccountsInstallLink($psxName),
+
             'psAccountsIsEnabled' => $this->installer->isPsAccountsEnabled(),
+            'psAccountsIsInstalled' => $this->installer->isPsAccountsInstalled(),
+
+            'psAccountsNeedsUpgrade' => $this->installer->checkPsAccountsVersion(),
+            'psAccountsUpgradeLink' => $this->installer->getPsAccountsUpgradeLink($psxName),
+
             'onboardingLink' => null,
             'user' => [
                 'email' => null,
