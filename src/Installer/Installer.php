@@ -75,8 +75,7 @@ class Installer
      */
     public function isPsAccountsInstalled()
     {
-        return \Module::isInstalled(self::PS_ACCOUNTS_MODULE_NAME)
-            && $this->checkPsAccountsVersion();
+        return \Module::isInstalled(self::PS_ACCOUNTS_MODULE_NAME);
     }
 
     /**
