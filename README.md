@@ -12,7 +12,7 @@ you can install it via [Composer](https://getcomposer.org).
 ```shell script
 composer require prestashop/prestashop-accounts-installer
 ```
-## Setup your service container (optional)
+## Register as a service in your PSx container (recommended)
 
 Example :
 

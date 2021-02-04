@@ -123,6 +123,35 @@ class Installer
      *
      * @throws \PrestaShopException
      */
+    public function getPsAccountsEnableLink($psxName)
+    {
+        if (true === $this->isPsAccountsEnabled()) {
+            return null;
+        }
+
+        if ($this->isShopVersion17()) {
+            $router = SymfonyContainer::getInstance()->get('router');
+
+            return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
+                    'action' => 'enable',
+                    'module_name' => 'ps_accounts',
+                ]);
+        }
+
+        return $this->getAdminLink('AdminModules', true, [], [
+            'module_name' => $psxName,
+            'configure' => $psxName,
+            'enable' => 'ps_accounts',
+        ]);
+    }
+
+    /**
+     * @param string $psxName
+     *
+     * @return string | null
+     *
+     * @throws \PrestaShopException
+     */
     public function getPsAccountsUpgradeLink($psxName)
     {
         if ($this->isShopVersion17()) {
@@ -240,12 +269,18 @@ class Installer
 
     /**
      * @return mixed
+     *
+     * @throws ModuleNotInstalledException
+     * @throws ModuleVersionException
      */
     public function getPsAccountsPresenter()
     {
-        try {
+        if ($this->isPsAccountsInstalled() &&
+            $this->checkPsAccountsVersion() &&
+            $this->isPsAccountsEnabled()
+        ) {
             return $this->getService(self::PS_ACCOUNTS_PRESENTER);
-        } catch (InstallerException $e) {
+        } else {
             return new InstallerPresenter($this);
         }
     }

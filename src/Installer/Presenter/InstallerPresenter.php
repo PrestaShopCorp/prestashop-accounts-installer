@@ -45,7 +45,7 @@ class InstallerPresenter
         return [
             'psIs17' => $this->installer->isShopVersion17(),
 
-            'psAccountsEnableLink' => null,
+            'psAccountsEnableLink' => $this->installer->getPsAccountsEnableLink($psxName),
             'psAccountsInstallLink' => $this->installer->getPsAccountsInstallLink($psxName),
 
             'psAccountsIsEnabled' => $this->installer->isPsAccountsEnabled(),
