@@ -33,26 +33,24 @@ class InstallerPresenter
     }
 
     /**
-     * @param string $psxName
-     *
      * @return array
      *
      * @throws \Exception
      */
-    public function present($psxName = Installer::PS_ACCOUNTS_MODULE_NAME)
+    public function present()
     {
         // Fallback minimal Presenter
         return [
             'psIs17' => $this->installer->isShopVersion17(),
 
-            'psAccountsEnableLink' => $this->installer->getPsAccountsEnableLink($psxName),
-            'psAccountsInstallLink' => $this->installer->getPsAccountsInstallLink($psxName),
+            'psAccountsEnableLink' => $this->installer->getPsAccountsEnableLink(),
+            'psAccountsInstallLink' => $this->installer->getPsAccountsInstallLink(),
 
             'psAccountsIsEnabled' => $this->installer->isPsAccountsEnabled(),
             'psAccountsIsInstalled' => $this->installer->isPsAccountsInstalled(),
 
-            'psAccountsNeedsUpgrade' => $this->installer->checkPsAccountsVersion(),
-            'psAccountsUpgradeLink' => $this->installer->getPsAccountsUpgradeLink($psxName),
+            'psAccountsIsUptodate' => $this->installer->checkPsAccountsVersion(),
+            'psAccountsUpdateLink' => $this->installer->getPsAccountsUpgradeLink(),
 
             'onboardingLink' => null,
             'user' => [

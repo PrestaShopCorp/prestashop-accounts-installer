@@ -4,7 +4,6 @@ namespace PrestaShop\PsAccountsInstaller\Installer;
 
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
-use PrestaShop\PsAccountsInstaller\Installer\Exception\InstallerException;
 use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleNotInstalledException;
 use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleVersionException;
 use PrestaShop\PsAccountsInstaller\Installer\Presenter\InstallerPresenter;
@@ -24,6 +23,11 @@ class Installer
      * @var string required version
      */
     private $psAccountsVersion;
+
+    /**
+     * @var string
+     */
+    private $moduleName = self::PS_ACCOUNTS_MODULE_NAME;
 
     /**
      * @var \Link
@@ -87,85 +91,68 @@ class Installer
     }
 
     /**
-     * @param string $psxName
-     *
      * @return string | null
      *
      * @throws \PrestaShopException
      */
-    public function getPsAccountsInstallLink($psxName)
+    public function getPsAccountsInstallLink()
     {
-        if (true === $this->isPsAccountsInstalled()) {
-            return null;
-        }
-
         if ($this->isShopVersion17()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
                     'action' => 'install',
-                    'module_name' => 'ps_accounts',
+                    'module_name' => $this->moduleName,
                 ]);
         }
 
         return $this->getAdminLink('AdminModules', true, [], [
-            'module_name' => $psxName,
-            'configure' => $psxName,
-            'install' => 'ps_accounts',
+            'module_name' => $this->moduleName,
+            'install' => $this->moduleName,
         ]);
     }
 
     /**
-     * @param string $psxName
-     *
      * @return string | null
      *
      * @throws \PrestaShopException
      */
-    public function getPsAccountsEnableLink($psxName)
+    public function getPsAccountsEnableLink()
     {
-        if (true === $this->isPsAccountsEnabled()) {
-            return null;
-        }
-
         if ($this->isShopVersion17()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
                     'action' => 'enable',
-                    'module_name' => 'ps_accounts',
+                    'module_name' => $this->moduleName,
                 ]);
         }
 
         return $this->getAdminLink('AdminModules', true, [], [
-            'module_name' => $psxName,
-            'configure' => $psxName,
-            'enable' => 'ps_accounts',
+            'module_name' => $this->moduleName,
+            'enable' => 1,
         ]);
     }
 
     /**
-     * @param string $psxName
-     *
      * @return string | null
      *
      * @throws \PrestaShopException
      */
-    public function getPsAccountsUpgradeLink($psxName)
+    public function getPsAccountsUpgradeLink()
     {
         if ($this->isShopVersion17()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
                     'action' => 'upgrade',
-                    'module_name' => 'ps_accounts',
+                    'module_name' => $this->moduleName,
                 ]);
         }
 
         return $this->getAdminLink('AdminModules', true, [], [
-            'module_name' => $psxName,
-            'configure' => $psxName,
-            'upgrade' => 'ps_accounts',
+            'module_name' => $this->moduleName,
+            'upgrade' => $this->moduleName,
         ]);
     }
 
