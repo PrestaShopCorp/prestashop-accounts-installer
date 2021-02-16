@@ -4,25 +4,15 @@ namespace PrestaShop\PsAccountsInstaller\Installer;
 
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
-use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleNotInstalledException;
-use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleVersionException;
-use PrestaShop\PsAccountsInstaller\Installer\Presenter\InstallerPresenter;
 
 class Installer
 {
     const PS_ACCOUNTS_MODULE_NAME = 'ps_accounts';
 
     /**
-     * Available services class names
-     */
-    const PS_ACCOUNTS_PRESENTER = 'PrestaShop\Module\PsAccounts\Presenter\PsAccountsPresenter';
-    const PS_ACCOUNTS_SERVICE = 'PrestaShop\Module\PsAccounts\Service\PsAccountsService';
-    const PS_BILLING_SERVICE = 'PrestaShop\Module\PsAccounts\Service\PsBillingService';
-
-    /**
      * @var string required version
      */
-    private $psAccountsVersion;
+    private $moduleVersion;
 
     /**
      * @var string
@@ -42,7 +32,7 @@ class Installer
      */
     public function __construct($psAccountsVersion, \Link $link = null)
     {
-        $this->psAccountsVersion = $psAccountsVersion;
+        $this->moduleVersion = $psAccountsVersion;
 
         if (null === $link) {
             $link = new \Link();
@@ -58,9 +48,9 @@ class Installer
      *
      * @throws \Exception
      */
-    public function installPsAccounts()
+    public function install()
     {
-        if (true === $this->isPsAccountsInstalled()) {
+        if (true === $this->isModuleInstalled()) {
             return true;
         }
 
@@ -71,23 +61,23 @@ class Installer
         $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
         $moduleManager = $moduleManagerBuilder->build();
 
-        return $moduleManager->install(self::PS_ACCOUNTS_MODULE_NAME);
+        return $moduleManager->install($this->getModuleName());
     }
 
     /**
      * @return bool
      */
-    public function isPsAccountsInstalled()
+    public function isModuleInstalled()
     {
-        return \Module::isInstalled(self::PS_ACCOUNTS_MODULE_NAME);
+        return \Module::isInstalled($this->getModuleName());
     }
 
     /**
      * @return bool
      */
-    public function isPsAccountsEnabled()
+    public function isModuleEnabled()
     {
-        return \Module::isEnabled(self::PS_ACCOUNTS_MODULE_NAME);
+        return \Module::isEnabled($this->getModuleName());
     }
 
     /**
@@ -95,7 +85,7 @@ class Installer
      *
      * @throws \PrestaShopException
      */
-    public function getPsAccountsInstallLink()
+    public function getInstallLink()
     {
         if ($this->isShopVersion17()) {
             $router = SymfonyContainer::getInstance()->get('router');
@@ -117,7 +107,7 @@ class Installer
      *
      * @throws \PrestaShopException
      */
-    public function getPsAccountsEnableLink()
+    public function getEnableLink()
     {
         if ($this->isShopVersion17()) {
             $router = SymfonyContainer::getInstance()->get('router');
@@ -139,7 +129,7 @@ class Installer
      *
      * @throws \PrestaShopException
      */
-    public function getPsAccountsUpgradeLink()
+    public function getUpgradeLink()
     {
         if ($this->isShopVersion17()) {
             $router = SymfonyContainer::getInstance()->get('router');
@@ -157,6 +147,49 @@ class Installer
     }
 
     /**
+     * @return bool
+     */
+    public function isShopVersion17()
+    {
+        return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkModuleVersion()
+    {
+        $module = \Module::getInstanceByName($this->getModuleName());
+
+        if ($module instanceof \Ps_accounts) {
+            return version_compare(
+                $module->version,
+                $this->moduleVersion,
+                '>='
+            );
+        }
+
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleVersion()
+    {
+        return $this->moduleVersion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleName()
+    {
+        return $this->moduleName;
+    }
+
+
+    /**
      * Adapter for getAdminLink from prestashop link class
      *
      * @param string $controller controller name
@@ -168,7 +201,7 @@ class Installer
      *
      * @throws \PrestaShopException
      */
-    public function getAdminLink($controller, $withToken = true, $sfRouteParams = [], $params = [])
+    protected function getAdminLink($controller, $withToken = true, $sfRouteParams = [], $params = [])
     {
         if ($this->isShopVersion17()) {
             return $this->link->getAdminLink($controller, $withToken, $sfRouteParams, $params);
@@ -183,91 +216,5 @@ class Installer
             . basename(_PS_ADMIN_DIR_)
             . '/' . $this->link->getAdminLink($controller, $withToken)
             . $paramsAsString;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isShopVersion17()
-    {
-        return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
-    }
-
-    /**
-     * @return bool
-     */
-    public function checkPsAccountsVersion()
-    {
-        $module = \Module::getInstanceByName(self::PS_ACCOUNTS_MODULE_NAME);
-
-        if ($module instanceof \Ps_accounts) {
-            return version_compare(
-                $module->version,
-                $this->psAccountsVersion,
-                '>='
-            );
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $serviceName
-     *
-     * @return mixed
-     *
-     * @throws ModuleNotInstalledException
-     * @throws ModuleVersionException
-     */
-    public function getService($serviceName)
-    {
-        if ($this->isPsAccountsInstalled()) {
-            if ($this->checkPsAccountsVersion()) {
-                return \Module::getInstanceByName(self::PS_ACCOUNTS_MODULE_NAME)
-                    ->getService($serviceName);
-            }
-            throw new ModuleVersionException('Module version expected : ' . $this->psAccountsVersion);
-        }
-        throw new ModuleNotInstalledException('Module not installed : ' . self::PS_ACCOUNTS_MODULE_NAME);
-    }
-
-    /**
-     * @return mixed
-     *
-     * @throws ModuleNotInstalledException
-     * @throws ModuleVersionException
-     */
-    public function getPsAccountsService()
-    {
-        return $this->getService(self::PS_ACCOUNTS_SERVICE);
-    }
-
-    /**
-     * @return mixed
-     *
-     * @throws ModuleNotInstalledException
-     * @throws ModuleVersionException
-     */
-    public function getPsBillingService()
-    {
-        return $this->getService(self::PS_BILLING_SERVICE);
-    }
-
-    /**
-     * @return mixed
-     *
-     * @throws ModuleNotInstalledException
-     * @throws ModuleVersionException
-     */
-    public function getPsAccountsPresenter()
-    {
-        if ($this->isPsAccountsInstalled() &&
-            $this->checkPsAccountsVersion() &&
-            $this->isPsAccountsEnabled()
-        ) {
-            return $this->getService(self::PS_ACCOUNTS_PRESENTER);
-        } else {
-            return new InstallerPresenter($this);
-        }
     }
 }

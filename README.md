@@ -22,6 +22,11 @@ services:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Installer'
     arguments:
       - '4.0.0'
+
+  ps_accounts.facade:
+    class: 'PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'
+    arguments:
+      - '@ps_accounts.installer'
 ```
 
 ## How to use it 
@@ -31,15 +36,7 @@ services:
 In your module main class `install` method. (Will only do something on PrestaShop 1.7 and above)
 
 ```php
-    define('PS_ACCOUNTS_VERSION', '4.0.0'); 
-
-    (new \PrestaShop\PsAccountsInstaller\Installer\Installer(PS_ACCOUNTS_VERSION))->installPsAccounts();
-```
-
-OR
-
-```php
-    $this->getService('ps_accounts.installer')->installPsAccounts();
+    $this->getService('ps_accounts.installer')->install();
 ```
 
 ### Presenter
@@ -48,16 +45,7 @@ For example in your main module's class `getContent` method.
 
 ```php
     Media::addJsDef([
-        'contextPsAccounts' => ((new \PrestaShop\PsAccountsInstaller\Installer\Installer(PS_ACCOUNTS_VERSION))
-            ->getPsAccountsPresenter())
-            ->Present($this->name),
-    ]);
-```
-OR
-
-```php
-    Media::addJsDef([
-        'contextPsAccounts' => $this->getService('ps_accounts.installer')
+        'contextPsAccounts' => $this->getService('ps_accounts.facade')
             ->getPsAccountsPresenter()
             ->present($this->name),
     ]);
@@ -79,15 +67,13 @@ Example :
 ```php
 use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleVersionException;
 use PrestaShop\PsAccountsInstaller\Installer\Exception\ModuleNotInstalledException;
-use PrestaShop\PsAccountsInstaller\Installer\Installer;
 
 try {
+    $psAccountsService = $this->getService('ps_accounts.facade')->getPsAccountsService();
 
-    $psAccountsService = (new Installer(PS_ACCOUNTS_VERSION))->getPsAccountsService();
-    
-    // OR
+    $shopJwt = $psAccountsService->getOrRefreshToken();
 
-    $psAccountsService = $this->getService('ps_accounts.installer')->getPsAccountsService();
+    $shopUuid = $psAccountsService->getShopUuidV4();
 
     // Your code here
 
