@@ -188,7 +188,6 @@ class Installer
         return $this->moduleName;
     }
 
-
     /**
      * Adapter for getAdminLink from prestashop link class
      *
