@@ -75,6 +75,8 @@ try {
 
     $shopUuid = $psAccountsService->getShopUuidV4();
 
+    $apiUrl = $psAccountsService->getAdminAjaxUrl();
+
     // Your code here
 
 } catch (ModuleNotInstalledException $e) {
