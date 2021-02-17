@@ -36,9 +36,11 @@ class PresentTest extends TestCase
         $expected = [
             'psIs17' => $this->faker->boolean,
             'psAccountsInstallLink' => $this->faker->url,
-            'psAccountsEnableLink' => null,
-            'psAccountsIsInstalled' => false,
-            'psAccountsIsEnabled' => false,
+            'psAccountsEnableLink' => $this->faker->url,
+            'psAccountsUpdateLink' => $this->faker->url,
+            'psAccountsIsInstalled' => $this->faker->boolean,
+            'psAccountsIsEnabled' => $this->faker->boolean,
+            'psAccountsIsUptodate' => $this->faker->boolean,
             'onboardingLink' => null,
             'user' => [
                 'email' => null,
@@ -54,9 +56,12 @@ class PresentTest extends TestCase
 
         $installer = $this->createConfiguredMock(Installer::class, [
             'isShopVersion17' => $expected['psIs17'],
-            'isPsAccountsEnabled' => $expected['psAccountsIsEnabled'],
-            'isPsAccountsInstalled' => $expected['psAccountsIsInstalled'],
-            'getPsAccountsInstallLink' => $expected['psAccountsInstallLink'],
+            'isModuleInstalled' => $expected['psAccountsIsInstalled'],
+            'getInstallLink' => $expected['psAccountsInstallLink'],
+            'isModuleEnabled' => $expected['psAccountsIsEnabled'],
+            'getEnableLink' => $expected['psAccountsEnableLink'],
+            'checkModuleVersion' => $expected['psAccountsIsUptodate'],
+            'getUpgradeLink' => $expected['psAccountsUpdateLink'],
         ]);
 
         $presenter = $this->getMockBuilder(InstallerPresenter::class)

@@ -43,14 +43,13 @@ class InstallerPresenter
         return [
             'psIs17' => $this->installer->isShopVersion17(),
 
-            'psAccountsEnableLink' => $this->installer->getEnableLink(),
             'psAccountsInstallLink' => $this->installer->getInstallLink(),
-
-            'psAccountsIsEnabled' => $this->installer->isModuleEnabled(),
-            'psAccountsIsInstalled' => $this->installer->isModuleInstalled(),
-
-            'psAccountsIsUptodate' => $this->installer->checkModuleVersion(),
+            'psAccountsEnableLink' => $this->installer->getEnableLink(),
             'psAccountsUpdateLink' => $this->installer->getUpgradeLink(),
+
+            'psAccountsIsInstalled' => $this->installer->isModuleInstalled(),
+            'psAccountsIsEnabled' => $this->installer->isModuleEnabled(),
+            'psAccountsIsUptodate' => $this->installer->checkModuleVersion(),
 
             'onboardingLink' => null,
             'user' => [
