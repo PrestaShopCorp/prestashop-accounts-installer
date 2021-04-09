@@ -88,7 +88,4 @@ jobs:
       run: composer install
 
     - name: PHPUnit tests
-      uses: php-actions/phpunit@v5
-      with:
-        configuration: ./phpunit.xml
-        bootstrap: ./tests/bootstrap.php
+      run: composer test
