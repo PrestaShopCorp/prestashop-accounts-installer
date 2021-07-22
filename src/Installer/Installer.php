@@ -25,6 +25,12 @@ class Installer
     private $link;
 
     /**
+     * @var \ModuleManager
+     */
+    private $moduleManager;
+
+
+    /**
      * Installer constructor.
      *
      * @param string $psAccountsVersion
@@ -38,6 +44,11 @@ class Installer
             $link = new \Link();
         }
         $this->link = $link;
+
+        if (true === $this->isShopVersion17()) {
+            $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
+            $this->moduleManager = $moduleManagerBuilder->build();
+        }
     }
 
     /**
@@ -58,10 +69,7 @@ class Installer
             return true;
         }
 
-        $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
-        $moduleManager = $moduleManagerBuilder->build();
-
-        return $moduleManager->install($this->getModuleName());
+        return $this->moduleManager->install($this->getModuleName());
     }
 
     /**
@@ -69,7 +77,11 @@ class Installer
      */
     public function isModuleInstalled()
     {
-        return \Module::isInstalled($this->getModuleName());
+        if (false === $this->isShopVersion17()) {
+            return \Module::isInstalled($this->getModuleName());
+        }
+
+        return $this->moduleManager->isInstalled($this->getModuleName());
     }
 
     /**
@@ -77,7 +89,11 @@ class Installer
      */
     public function isModuleEnabled()
     {
-        return \Module::isEnabled($this->getModuleName());
+        if (false === $this->isShopVersion17()) {
+            return \Module::isEnabled($this->getModuleName());
+        }
+
+        return $this->moduleManager->isEnabled($this->getModuleName());
     }
 
     /**
@@ -91,9 +107,9 @@ class Installer
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
-                    'action' => 'install',
-                    'module_name' => $this->moduleName,
-                ]);
+                'action' => 'install',
+                'module_name' => $this->moduleName,
+            ]);
         }
 
         return $this->getAdminLink('AdminModules', true, [], [
@@ -113,9 +129,9 @@ class Installer
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
-                    'action' => 'enable',
-                    'module_name' => $this->moduleName,
-                ]);
+                'action' => 'enable',
+                'module_name' => $this->moduleName,
+            ]);
         }
 
         return $this->getAdminLink('AdminModules', true, [], [
@@ -135,9 +151,9 @@ class Installer
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
-                    'action' => 'upgrade',
-                    'module_name' => $this->moduleName,
-                ]);
+                'action' => 'upgrade',
+                'module_name' => $this->moduleName,
+            ]);
         }
 
         return $this->getAdminLink('AdminModules', true, [], [
