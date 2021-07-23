@@ -29,7 +29,6 @@ class Installer
      */
     private $moduleManager;
 
-
     /**
      * Installer constructor.
      *
