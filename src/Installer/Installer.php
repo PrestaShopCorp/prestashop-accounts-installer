@@ -25,7 +25,7 @@ class Installer
     private $link;
 
     /**
-     * @var \ModuleManager
+     * @var mixed
      */
     private $moduleManager;
 
