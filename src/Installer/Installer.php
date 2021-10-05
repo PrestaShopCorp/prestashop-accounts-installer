@@ -96,7 +96,7 @@ class Installer
     }
 
     /**
-     * @return string | null
+     * @return string|null
      *
      * @throws \PrestaShopException
      */
@@ -118,7 +118,7 @@ class Installer
     }
 
     /**
-     * @return string | null
+     * @return string|null
      *
      * @throws \PrestaShopException
      */
@@ -140,7 +140,7 @@ class Installer
     }
 
     /**
-     * @return string | null
+     * @return string|null
      *
      * @throws \PrestaShopException
      */
