@@ -73,7 +73,7 @@ try {
 
     $shopJwt = $psAccountsService->getOrRefreshToken();
 
-    $shopUuid = $psAccountsService->getShopUuidV4();
+    $shopUuid = $psAccountsService->getShopUuid();
 
     $apiUrl = $psAccountsService->getAdminAjaxUrl();
 
