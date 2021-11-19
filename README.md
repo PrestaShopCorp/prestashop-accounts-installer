@@ -60,7 +60,7 @@ Installer class includes accessors to get instances of services from PsAccounts 
 * getPsAccountsService
 * getPsBillingService
 
-The methods above will throw an exception in case `ps_accounts` module is not installed.
+The methods above will throw an exception in case `ps_accounts` module is not installed or not in the required version.
 
 Example :
 
