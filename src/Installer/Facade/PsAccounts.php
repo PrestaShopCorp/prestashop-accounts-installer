@@ -46,7 +46,7 @@ class PsAccounts
                 return \Module::getInstanceByName($this->installer->getModuleName())
                     ->getService($serviceName);
             }
-            throw new ModuleVersionException('Module version expected : ' . $this->installer->getModuleVersion());
+            throw new ModuleVersionException('The current version of the module "' . $this->installer->getModuleName() . '" is below the required one and should be upgraded. The minimum expected version is: ' . $this->installer->getModuleVersion());
         }
         throw new ModuleNotInstalledException('Module not installed : ' . $this->installer->getModuleName());
     }
