@@ -41,7 +41,7 @@ class PsAccounts
      */
     public function getService($serviceName)
     {
-        if ($this->installer->isModuleInstalled()) {
+        if ($this->installer->isModuleInstalled() && \Module::getInstanceByName($this->installer->getModuleName()) instanceof \Ps_accounts) {
             if ($this->installer->checkModuleVersion()) {
                 return \Module::getInstanceByName($this->installer->getModuleName())
                     ->getService($serviceName);

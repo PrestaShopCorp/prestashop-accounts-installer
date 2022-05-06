@@ -19,7 +19,6 @@ parameters:
 		- '#Property PrestaShop\\AccountsAuth\\Service\\PsAccountsService::\$container has unknown class Symfony\\Component\\DependencyInjection\\ContainerInterface as its type.#'
 		- '#Property PrestaShop\\AccountsAuth\\Service\\PsBillingService::\$container has unknown class Symfony\\Component\\DependencyInjection\\ContainerInterface as its type.#'
 		- '#Method LinkCore::getAdminLink\(\) invoked with 4 parameters, 1-2 required.#'
-		- '#Cannot call method getService\(\) on Module\|false.#'
 		- '#Class PrestaShop\\Module\\PsAccounts\\Presenter\\PsAccountsPresenter not found.#'
 		- '#Call to method get\(\) on an unknown class PrestaShop\\PrestaShop\\Adapter\\SymfonyContainer.#'
 		- '#Call to an undefined method object::generate\(\).#'
