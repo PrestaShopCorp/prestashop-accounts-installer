@@ -12,6 +12,7 @@ you can install it via [Composer](https://getcomposer.org).
 ```shell script
 composer require prestashop/prestashop-accounts-installer
 ```
+
 ## Register as a service in your PSx container (recommended)
 
 Example :
@@ -21,7 +22,7 @@ services:
   ps_accounts.installer:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Installer'
     arguments:
-      - '4.0.0'
+      - '5.0'
 
   ps_accounts.facade:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'
@@ -72,19 +73,24 @@ try {
     $psAccountsService = $this->getService('ps_accounts.facade')->getPsAccountsService();
 
     $shopJwt = $psAccountsService->getOrRefreshToken();
-
     $shopUuid = $psAccountsService->getShopUuid();
-
     $apiUrl = $psAccountsService->getAdminAjaxUrl();
 
     // Your code here
-
 } catch (ModuleNotInstalledException $e) {
-
     // You handle exception here
 
 } catch (ModuleVersionException $e) {
-
     // You handle exception here
 }
 ```
+
+## Contributing
+
+PrestaShop modules are open source extensions to the PrestaShop e-commerce platform. Everyone is welcome and even encouraged to contribute with their own improvements!
+
+Just make sure to follow our contribution guidelines.
+
+## License
+
+This module is released under the MIT License
