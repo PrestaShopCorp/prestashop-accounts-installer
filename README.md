@@ -29,6 +29,8 @@ services:
       - '@ps_accounts.installer'
 ```
 
+The `4.0.0` specified argument is the minimum required `ps_account` module version. You should modify it if you need another version.
+
 ## How to use it 
 
 ### Installer
