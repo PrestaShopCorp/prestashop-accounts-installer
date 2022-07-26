@@ -4,6 +4,17 @@ Utility package to install `ps_accounts` module or present data to trigger manua
 
 This module also give you access to `ps_accounts` services through its module service container dealing with the installation status of the module.
 
+### Compatibility Matrix
+
+We aims to follow partially the Prestashop compatibility charts
+- [Compatibility Chart Prestashop 1.6 & 1.7](https://devdocs.prestashop.com/1.7/basics/installation/system-requirements/#php-compatibility-chart)
+- [Compatibility Chart Prestashop 8.1](https://devdocs.prestashop.com/8/basics/installation/system-requirements/#php-compatibility-chart)
+
+| ps_account version                      | Prestashop Version   | PHP Version     | Event Bus installation
+|-----------------------------------------|----------------------|-----------------|-------------------------
+| 5.x                                     | >=1.6.1 \|\| <1.7.0  | ≥5.6 \|\| ≤7.4  | Yes
+| 5.x                                     | >=1.7.0              | ≥5.6 \|\| ≤7.4  | No
+
 ## Installation
 
 This package is available on [Packagist](https://packagist.org/packages/prestashop/prestashop-accounts-installer), 
@@ -12,6 +23,7 @@ you can install it via [Composer](https://getcomposer.org).
 ```shell script
 composer require prestashop/prestashop-accounts-installer
 ```
+
 ## Register as a service in your PSx container (recommended)
 
 Example :
