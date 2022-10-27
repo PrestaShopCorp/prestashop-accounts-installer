@@ -8,12 +8,13 @@ This module also give you access to `ps_accounts` services through its module se
 
 We aims to follow partially the Prestashop compatibility charts
 - [Compatibility Chart Prestashop 1.6 & 1.7](https://devdocs.prestashop.com/1.7/basics/installation/system-requirements/#php-compatibility-chart)
-- [Compatibility Chart Prestashop 8.1](https://devdocs.prestashop.com/8/basics/installation/system-requirements/#php-compatibility-chart)
+- [Compatibility Chart Prestashop 8](https://devdocs.prestashop.com/8/basics/installation/system-requirements/#php-compatibility-chart)
 
 | ps_account version                      | Prestashop Version   | PHP Version     | Event Bus installation
 |-----------------------------------------|----------------------|-----------------|-------------------------
-| 5.x                                     | >=1.6.1 \|\| <1.7.0  | ≥5.6 \|\| ≤7.4  | Yes
-| 5.x                                     | >=1.7.0              | ≥5.6 \|\| ≤7.4  | No
+| 6.x                                     | >=8.0.0              | ≥7.2 \|\| ≤8.1  | Yes
+| 5.x                                     | >=1.7.0 \|\| <8.0.0  | ≥5.6 \|\| ≤7.4  | Yes
+| 5.x                                     | >=1.6.1 \|\| <1.7.0  | ≥5.6 \|\| ≤7.4  | No
 
 ## Installation
 
@@ -33,7 +34,7 @@ services:
   ps_accounts.installer:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Installer'
     arguments:
-      - '4.0.0'
+      - '5.0.0'
 
   ps_accounts.facade:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'
@@ -41,7 +42,7 @@ services:
       - '@ps_accounts.installer'
 ```
 
-The `4.0.0` specified argument is the minimum required `ps_account` module version. You should modify it if you need another version.
+The `5.0.0` specified argument is the minimum required `ps_account` module version. You should modify it if you need another version.
 
 ## How to use it 
 
