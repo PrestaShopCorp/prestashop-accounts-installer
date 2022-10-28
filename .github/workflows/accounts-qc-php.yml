@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        presta-versions: ['latest', '1.7.0.3', '1.6.1.21', '1.6.1.0']
+        presta-versions: ['latest', '8.0', '1.7', '1.7.0.3', '1.6.1.21', '1.6.1.0']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -51,13 +51,13 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
 
       - name: Cache vendor folder
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: vendor
           key: php-${{ hashFiles('composer.lock') }}
 
       - name: Cache composer folder
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.composer/cache
           key: php-composer-cache
@@ -95,7 +95,7 @@ jobs:
         php-version: ${{ env.PHP_VERSION }}
 
     - name: Cache vendor folder
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: vendor
         key: php-${{ hashFiles('composer.lock') }}
