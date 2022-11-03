@@ -23,6 +23,6 @@
     "fzaninotto/faker": "^1.9"
   },
   "scripts": {
-        "test": "./vendor/phpunit/phpunit/phpunit --configuration './phpunit.xml' --bootstrap './tests/bootstrap.php' --test-suffix 'Test.php,.phpt'"
+        "test": "XDEBUG_MODE=coverage ./vendor/phpunit/phpunit/phpunit --configuration './phpunit.xml' --bootstrap './tests/bootstrap.php' --test-suffix 'Test.php,.phpt' --coverage-text"
     }
 }
