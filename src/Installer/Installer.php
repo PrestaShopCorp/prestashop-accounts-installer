@@ -64,7 +64,7 @@ class Installer
             return true;
         }
 
-        if (false === $this->isShopVersion173()) {
+        if (false === $this->isShopVersion17()) {
             return true;
         }
 
