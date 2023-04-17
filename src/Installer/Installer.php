@@ -102,7 +102,7 @@ class Installer
      */
     public function getInstallLink()
     {
-        if ($this->isShopVersion17()) {
+        if ($this->isShopVersion173()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
@@ -124,7 +124,7 @@ class Installer
      */
     public function getEnableLink()
     {
-        if ($this->isShopVersion17()) {
+        if ($this->isShopVersion173()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
@@ -146,7 +146,7 @@ class Installer
      */
     public function getUpgradeLink()
     {
-        if ($this->isShopVersion17()) {
+        if ($this->isShopVersion173()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
