@@ -64,7 +64,7 @@ class Installer
             return true;
         }
 
-        if (false === $this->isShopVersion17()) {
+        if (false === $this->isShopVersion173()) {
             return true;
         }
 
@@ -167,6 +167,14 @@ class Installer
     public function isShopVersion17()
     {
         return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShopVersion173()
+    {
+        return version_compare(_PS_VERSION_, '1.7.3.0', '>=');
     }
 
     /**
