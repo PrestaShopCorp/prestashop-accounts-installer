@@ -102,7 +102,7 @@ class Installer
      */
     public function getInstallLink()
     {
-        if ($this->isShopVersion17()) {
+        if ($this->isShopVersion173()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
@@ -124,7 +124,7 @@ class Installer
      */
     public function getEnableLink()
     {
-        if ($this->isShopVersion17()) {
+        if ($this->isShopVersion173()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
@@ -146,7 +146,7 @@ class Installer
      */
     public function getUpgradeLink()
     {
-        if ($this->isShopVersion17()) {
+        if ($this->isShopVersion173()) {
             $router = SymfonyContainer::getInstance()->get('router');
 
             return \Tools::getHttpHost(true) . $router->generate('admin_module_manage_action', [
@@ -167,6 +167,14 @@ class Installer
     public function isShopVersion17()
     {
         return version_compare(_PS_VERSION_, '1.7.0.0', '>=');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShopVersion173()
+    {
+        return version_compare(_PS_VERSION_, '1.7.3.0', '>=');
     }
 
     /**
