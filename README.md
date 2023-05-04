@@ -31,16 +31,18 @@ Example :
 
 ```yaml
 services:
-  ps_accounts.installer:
+  <your_module>.ps_accounts_installer:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Installer'
     arguments:
       - '5.0.0'
 
-  ps_accounts.facade:
+  <your_module>.ps_accounts_facade:
     class: 'PrestaShop\PsAccountsInstaller\Installer\Facade\PsAccounts'
     arguments:
-      - '@ps_accounts.installer'
+      - '@<your_module>.ps_accounts_installer'
 ```
+
+The name under which you register both services in your service container must be unique to avoid collision with other modules including it.
 
 The `5.0.0` specified argument is the minimum required `ps_account` module version. You should modify it if you need another version.
 
